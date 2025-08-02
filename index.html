@@ -23,11 +23,21 @@
     </div>
 
     <div class="thumbnail-row">
-      <div class="thumbnail-gallery"><img src="1.jpeg" onclick="setMainImage(this)" /></div>
-      <div class="thumbnail-gallery"><img src="2.jpg" onclick="setMainImage(this)" /></div>
-      <div class="thumbnail-gallery"><img src="3.png" onclick="setMainImage(this)" /></div>
-      <div class="thumbnail-gallery"><img src="4.jpeg" onclick="setMainImage(this)" /></div>
-      <div class="thumbnail-gallery"><img src="4.jpeg" onclick="setMainImage(this)" /></div>
+      <div class="thumbnail-gallery">
+        <img src="1.jpeg" onclick="setMainImage(this)" />
+      </div>
+      <div class="thumbnail-gallery">
+        <img src="2.jpg" onclick="setMainImage(this)" />
+      </div>
+      <div class="thumbnail-gallery">
+        <img src="3.png" onclick="setMainImage(this)" />
+      </div>
+      <div class="thumbnail-gallery">
+        <img src="4.jpeg" onclick="setMainImage(this)" />
+      </div>
+      <div class="thumbnail-gallery">
+        <img src="4.jpeg" onclick="setMainImage(this)" />
+      </div>
     </div>
   </main>
 
@@ -64,7 +74,7 @@
     const thumbnailContainers = document.querySelectorAll('.thumbnail-gallery');
 
     function updateActiveContainer() {
-      thumbnailContainers.forEach(container => container.classList.remove('active-container'));
+      thumbnailContainers.forEach(c => c.classList.remove('active-container'));
       if (thumbnailContainers[currentIndex]) {
         thumbnailContainers[currentIndex].classList.add('active-container');
       }
@@ -89,10 +99,13 @@
     function downloadImage() {
       const link = document.createElement('a');
       link.href = mainImg.src;
-      link.download = 'artwork.jpg';
+      link.download = mainImg.src.split('/').pop();
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     }
 
+    // Highlight first thumbnail on load
     window.onload = updateActiveContainer;
   </script>
 </body>
