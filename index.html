@@ -13,13 +13,11 @@
   </header>
 
   <main class="container">
-    <div class="main-image-wrapper">
-      <div class="main-image-container">
-        <img id="main-image" src="1.jpeg" alt="Main Artwork" />
-        <button class="arrow left" onclick="changeImage(-1)">&#8592;</button>
-        <button class="arrow right" onclick="changeImage(1)">&#8594;</button>
-      </div>
-      <a id="download-btn" class="download-button" href="1.jpeg" download>Download</a>
+    <div class="main-image-container">
+      <img id="main-image" src="1.jpeg" alt="Main Artwork" />
+      <button class="arrow left" onclick="changeImage(-1)">&#8592;</button>
+      <button class="arrow right" onclick="changeImage(1)">&#8594;</button>
+      <button class="download-btn" onclick="downloadImage()">Download</button>
     </div>
 
     <div class="thumbnail-gallery">
@@ -31,21 +29,28 @@
   </main>
 
   <section class="details-box">
-    <h3><center><b>Tools Used</b></center></h3>
+    <h3>Artwork Details</h3>
     <ul>
-      <li><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" class="icon"><span class="tool-name blender">Blender : </span> 3D modeling, sculpting</li>
-      <li><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" class="icon"> <span class="tool-name unreal">Unreal Engine : </span> Lighting and rendering</li>
-      <li><img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/davinci-resolve-logo.png" class="icon"> <span class="tool-name davinci">DaVinci Resolve : </span> Video editing & color grading</li>
+      <li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Blender_Icon.svg" class="icon"> 
+        <span class="tool-name blender">Blender:</span> 3D modeling, sculpting</li>
+      <li><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" class="icon"> 
+        <span class="tool-name unreal">Unreal Engine:</span> Lighting and rendering</li>
+      <li><img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/DaVinci_Resolve_17_logo.svg" class="icon"> 
+        <span class="tool-name davinci">DaVinci Resolve:</span> Video editing & color grading</li>
     </ul>
   </section>
 
   <div class="follow-section">
     <h2>Follow Me</h2>
     <div class="social-links">
-      <a href="https://instagram.com/yourhandle" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://artstation.com/yourhandle" target="_blank"><i class="fab fa-artstation"></i> ArtStation</a>
-      <a href="https://discord.com/invite/yourinvite" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-      <a href="https://youtube.com/@yourchannel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="https://instagram.com/yourhandle" target="_blank" class="social instagram">
+        <i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://artstation.com/yourhandle" target="_blank" class="social artstation">
+        <i class="fab fa-artstation"></i> ArtStation</a>
+      <a href="https://discord.com/invite/yourinvite" target="_blank" class="social discord">
+        <i class="fab fa-discord"></i> Discord</a>
+      <a href="https://youtube.com/@yourchannel" target="_blank" class="social youtube">
+        <i class="fab fa-youtube"></i> YouTube</a>
     </div>
   </div>
 
@@ -57,24 +62,26 @@
     const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
     let currentIndex = 0;
     const mainImg = document.getElementById('main-image');
-    const downloadBtn = document.getElementById('download-btn');
 
-    function updateMainImage(src) {
-      mainImg.src = src;
-      downloadBtn.href = src;
+    function changeImage(direction) {
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      mainImg.src = images[currentIndex];
       mainImg.classList.add("fade");
       setTimeout(() => mainImg.classList.remove("fade"), 300);
     }
 
-    function changeImage(direction) {
-      currentIndex = (currentIndex + direction + images.length) % images.length;
-      updateMainImage(images[currentIndex]);
+    function setMainImage(img) {
+      mainImg.src = img.src;
+      currentIndex = images.indexOf(img.src.split('/').pop());
+      mainImg.classList.add("fade");
+      setTimeout(() => mainImg.classList.remove("fade"), 300);
     }
 
-    function setMainImage(img) {
-      const filename = img.src.split('/').pop();
-      currentIndex = images.indexOf(filename);
-      updateMainImage(filename);
+    function downloadImage() {
+      const link = document.createElement('a');
+      link.href = mainImg.src;
+      link.download = mainImg.src.split('/').pop();
+      link.click();
     }
   </script>
 </body>
