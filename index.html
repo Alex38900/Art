@@ -22,17 +22,12 @@
       <button class="download-btn" onclick="downloadImage()">Download</button>
     </div>
 
-    <div class="thumbnail-gallery">
-      <img src="1.jpeg" onclick="setMainImage(this)" />
-    </div>
-    <div class="thumbnail-gallery">
-      <img src="2.jpg" onclick="setMainImage(this)" />
-    </div>
-    <div class="thumbnail-gallery">
-      <img src="3.png" onclick="setMainImage(this)" />
-    </div>
-    <div class="thumbnail-gallery">
-      <img src="4.jpeg" onclick="setMainImage(this)" />
+    <div class="thumbnail-row">
+      <div class="thumbnail-gallery"><img src="1.jpeg" onclick="setMainImage(this)" /></div>
+      <div class="thumbnail-gallery"><img src="2.jpg" onclick="setMainImage(this)" /></div>
+      <div class="thumbnail-gallery"><img src="3.png" onclick="setMainImage(this)" /></div>
+      <div class="thumbnail-gallery"><img src="4.jpeg" onclick="setMainImage(this)" /></div>
+      <div class="thumbnail-gallery"><img src="4.jpeg" onclick="setMainImage(this)" /></div>
     </div>
   </main>
 
@@ -63,37 +58,42 @@
   </footer>
 
   <script>
-  const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
-  let currentIndex = 0;
-  const mainImg = document.getElementById('main-image');
+    const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
+    let currentIndex = 0;
+    const mainImg = document.getElementById('main-image');
+    const thumbnailContainers = document.querySelectorAll('.thumbnail-gallery');
 
-  // Get all container divs (each contains 1 image)
-  const thumbnailContainers = document.querySelectorAll('.thumbnail-gallery');
+    function updateActiveContainer() {
+      thumbnailContainers.forEach(container => container.classList.remove('active-container'));
+      if (thumbnailContainers[currentIndex]) {
+        thumbnailContainers[currentIndex].classList.add('active-container');
+      }
+    }
 
-  function updateActiveContainer() {
-    thumbnailContainers.forEach(container => container.classList.remove('active-container'));
-    thumbnailContainers[currentIndex].classList.add('active-container');
-  }
+    function changeImage(direction) {
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      mainImg.src = images[currentIndex];
+      mainImg.classList.add("fade");
+      setTimeout(() => mainImg.classList.remove("fade"), 300);
+      updateActiveContainer();
+    }
 
-  function changeImage(direction) {
-    currentIndex = (currentIndex + direction + images.length) % images.length;
-    mainImg.src = images[currentIndex];
-    mainImg.classList.add("fade");
-    setTimeout(() => mainImg.classList.remove("fade"), 300);
-    updateActiveContainer();
-  }
+    function setMainImage(img) {
+      mainImg.src = img.src;
+      currentIndex = images.findIndex(image => img.src.includes(image));
+      mainImg.classList.add("fade");
+      setTimeout(() => mainImg.classList.remove("fade"), 300);
+      updateActiveContainer();
+    }
 
-  function setMainImage(img) {
-    mainImg.src = img.src;
-    currentIndex = images.findIndex(image => img.src.includes(image));
-    mainImg.classList.add("fade");
-    setTimeout(() => mainImg.classList.remove("fade"), 300);
-    updateActiveContainer();
-  }
+    function downloadImage() {
+      const link = document.createElement('a');
+      link.href = mainImg.src;
+      link.download = 'artwork.jpg';
+      link.click();
+    }
 
-  // Call once on load to set initial highlight
-  window.onload = updateActiveContainer;
-</script>
-
+    window.onload = updateActiveContainer;
+  </script>
 </body>
 </html>
