@@ -36,8 +36,7 @@ header h1 {
   position: relative;
   width: 100%;
   max-width: 740px;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
 .main-image-container img {
@@ -73,45 +72,41 @@ header h1 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.5rem; /* smaller size */
-  background-color: rgba(0, 198, 255, 0.3); /* translucent blue */
-  color: #ffffff;
+  font-size: 1.5rem;
+  background-color: rgba(0, 198, 255, 0.5);
+  color: #000;
   border: none;
-  padding: 6px 10px;
+  padding: 5px 10px;
   cursor: pointer;
   border-radius: 50%;
   z-index: 2;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.arrow:hover {
-  background-color: rgba(0, 198, 255, 0.5);
-  transform: scale(1.1);
+  transition: background 0.3s;
 }
 
 .arrow.left {
-  left: 10px;
+  left: -30px;
 }
 
 .arrow.right {
-  right: 10px;
+  right: -30px;
 }
 
 .thumbnail-row {
   display: flex;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 15px;
   justify-content: center;
-  max-width: 800px;
+  width: 100%;
 }
 
 .thumbnail-gallery {
-  width: calc(25% - 15px);
+  width: 150px;
   background-color: #1c1c1c;
   padding: 5px;
   border: 2px solid #00c6ff66;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
+  transition: border 0.3s, box-shadow 0.3s;
 }
 
 .thumbnail-gallery img {
@@ -120,6 +115,7 @@ header h1 {
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 8px;
+  margin-bottom: 0;
   transition: transform 0.2s, border 0.3s;
 }
 
@@ -240,15 +236,21 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .thumbnail-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .thumbnail-gallery {
+    width: 45%;
+  }
+
   .arrow.left {
     left: 10px;
   }
 
   .arrow.right {
     right: 10px;
-  }
-
-  .thumbnail-gallery {
-    width: 23%;
   }
 }
