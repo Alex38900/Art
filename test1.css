@@ -73,22 +73,28 @@ header h1 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2rem;
-  background-color: #00c6ff;
-  color: #000;
+  font-size: 1.5rem; /* smaller size */
+  background-color: rgba(0, 198, 255, 0.3); /* translucent blue */
+  color: #ffffff;
   border: none;
-  padding: 8px 14px;
+  padding: 6px 10px;
   cursor: pointer;
   border-radius: 50%;
   z-index: 2;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.arrow:hover {
+  background-color: rgba(0, 198, 255, 0.5);
+  transform: scale(1.1);
 }
 
 .arrow.left {
-  left: -40px;
+  left: 10px;
 }
 
 .arrow.right {
-  right: -40px;
+  right: 10px;
 }
 
 .thumbnail-row {
