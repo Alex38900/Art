@@ -19,23 +19,26 @@ header h1 {
 
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   padding: 30px;
   gap: 30px;
-  flex-wrap: wrap;
 }
 
-.main-image-container {
-  position: relative;
+.main-column {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.main-image-container {
+  position: relative;
+}
+
 .main-image-container img {
-  width: 740px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 740px;
   height: auto;
   border-radius: 10px;
   border: 2px solid #00c6ff66;
@@ -44,18 +47,18 @@ header h1 {
 
 .download-btn {
   margin-top: 15px;
+  padding: 10px 20px;
   background-color: #00c6ff;
   border: none;
-  color: #000;
-  padding: 10px 20px;
-  border-radius: 5px;
+  color: black;
   font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .download-btn:hover {
-  background-color: #00a0cc;
+  background-color: #00a2cc;
 }
 
 .fade {
@@ -95,12 +98,12 @@ header h1 {
 
 .thumbnail-gallery img {
   width: 100%;
-  height: 100px;
+  height: auto;
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 8px;
-  transition: transform 0.2s, border 0.3s;
   margin-bottom: 10px;
+  transition: transform 0.2s, border 0.3s;
 }
 
 .thumbnail-gallery img:hover {
@@ -153,20 +156,9 @@ header h1 {
   filter: drop-shadow(0 0 2px rgba(0, 198, 255, 0.3));
 }
 
-.tool-name {
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-.tool-name.blender {
-  color: #f5792a;
-}
-.tool-name.unreal {
-  color: #1c91f2;
-}
-.tool-name.davinci {
-  color: #9966ff;
-}
+.blender { color: #f5792a; }
+.unreal { color: #1a9fff; }
+.davinci { color: #9e71ff; }
 
 .follow-section {
   max-width: 1000px;
@@ -192,50 +184,15 @@ header h1 {
 }
 
 .social-links a {
+  color: white;
   text-decoration: none;
-  padding: 10px 14px;
+  border: 1px solid #00c6ff66;
+  padding: 10px 15px;
   border-radius: 5px;
   font-size: 14px;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.social.instagram {
-  color: #E1306C;
-  border-color: #E1306C;
-}
-.social.instagram:hover {
-  background-color: #E1306C;
-  color: #000;
-}
-
-.social.artstation {
-  color: #13AFF0;
-  border-color: #13AFF0;
-}
-.social.artstation:hover {
-  background-color: #13AFF0;
-  color: #000;
-}
-
-.social.discord {
-  color: #7289DA;
-  border-color: #7289DA;
-}
-.social.discord:hover {
-  background-color: #7289DA;
-  color: #000;
-}
-
-.social.youtube {
-  color: #FF0000;
-  border-color: #FF0000;
-}
-.social.youtube:hover {
-  background-color: #FF0000;
-  color: #000;
 }
 
 .social-links a i {
@@ -245,23 +202,38 @@ header h1 {
   text-align: center;
 }
 
+.social-links a.instagram { background-color: #e1306c22; }
+.social-links a.artstation { background-color: #13aff022; }
+.social-links a.discord { background-color: #5865f222; }
+.social-links a.youtube { background-color: #ff000022; }
+
+.social-links a:hover {
+  background-color: #00c6ff;
+  color: #000;
+  transform: scale(1.05);
+}
+
 footer {
   margin-top: 50px;
-  padding: 20px;
-  background: linear-gradient(to right, #002c47, #005b94);
-  text-align: center;
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .container {
     flex-direction: column;
     align-items: center;
   }
 
-  .main-image-container img {
-    width: 90vw;
-    height: auto;
+  .thumbnail-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .thumbnail-gallery img {
+    width: 45%;
+    margin: 5px;
   }
 
   .arrow.left {
@@ -270,40 +242,5 @@ footer {
 
   .arrow.right {
     right: 10px;
-  }
-
-  .thumbnail-gallery {
-    width: 90vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .thumbnail-gallery img {
-    width: 42vw;
-    height: auto;
-  }
-}
-
-@media (max-width: 500px) {
-  .social-links {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .social-links a {
-    width: 90%;
-    justify-content: center;
-  }
-
-  .details-box ul {
-    font-size: 14px;
-  }
-
-  .icon {
-    width: 24px;
-    height: 24px;
   }
 }
