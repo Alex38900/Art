@@ -24,8 +24,14 @@
 
     <div class="thumbnail-gallery">
       <img src="1.jpeg" onclick="setMainImage(this)" />
+    </div>
+    <div class="thumbnail-gallery">
       <img src="2.jpg" onclick="setMainImage(this)" />
+    </div>
+    <div class="thumbnail-gallery">
       <img src="3.png" onclick="setMainImage(this)" />
+    </div>
+    <div class="thumbnail-gallery">
       <img src="4.jpeg" onclick="setMainImage(this)" />
     </div>
   </main>
@@ -33,11 +39,11 @@
   <section class="details-box">
     <h3>Artwork Details</h3>
     <ul>
-      <li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Blender_Icon.svg" class="icon"> 
+      <li><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" class="icon"> 
         <strong class="blender">Blender:</strong> 3D modeling, sculpting</li>
       <li><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/UE_Logo_Black_Centered.svg" class="icon"> 
         <strong class="unreal">Unreal Engine:</strong> Lighting and rendering</li>
-      <li><img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/DaVinci_Resolve_17_logo.svg" class="icon"> 
+      <li><img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/davinci-resolve-logo.png" class="icon"> 
         <strong class="davinci">DaVinci Resolve:</strong> Video editing & color grading</li>
     </ul>
   </section>
@@ -45,10 +51,10 @@
   <div class="follow-section">
     <h2>Follow Me</h2>
     <div class="social-links">
-      <a class="instagram" href="https://instagram.com/yourhandle" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a class="artstation" href="https://artstation.com/yourhandle" target="_blank"><i class="fab fa-artstation"></i> ArtStation</a>
-      <a class="discord" href="https://discord.com/invite/yourinvite" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-      <a class="youtube" href="https://youtube.com/@yourchannel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a class="instagram" href="https://www.instagram.com/cg_alexx_3d?igsh=MWJ3c252aDZwdWYybg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a class="artstation" href="https://alex3809.artstation.com/" target="_blank"><i class="fab fa-artstation"></i> ArtStation</a>
+      <a class="discord" href="https://discord.gg/k9uS8a4r" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+      <a class="youtube" href="https://youtube.com/@alex389x?si=14yD8w9TOdrbGviu" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
     </div>
   </div>
 
@@ -57,31 +63,37 @@
   </footer>
 
   <script>
-    const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
-    let currentIndex = 0;
-    const mainImg = document.getElementById('main-image');
+  const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
+  let currentIndex = 0;
+  const mainImg = document.getElementById('main-image');
 
-    function changeImage(direction) {
-      currentIndex = (currentIndex + direction + images.length) % images.length;
-      mainImg.src = images[currentIndex];
-      mainImg.classList.add("fade");
-      setTimeout(() => mainImg.classList.remove("fade"), 300);
-    }
+  // Get all container divs (each contains 1 image)
+  const thumbnailContainers = document.querySelectorAll('.thumbnail-gallery');
 
-    function setMainImage(img) {
-      mainImg.src = img.src;
-      currentIndex = images.indexOf(img.src.split('/').pop());
-      mainImg.classList.add("fade");
-      setTimeout(() => mainImg.classList.remove("fade"), 300);
-    }
+  function updateActiveContainer() {
+    thumbnailContainers.forEach(container => container.classList.remove('active-container'));
+    thumbnailContainers[currentIndex].classList.add('active-container');
+  }
 
-    function downloadImage() {
-      const link = document.createElement('a');
-      link.href = mainImg.src;
-      link.download = 'artwork';
-      link.click();
-    }
-  </script>
+  function changeImage(direction) {
+    currentIndex = (currentIndex + direction + images.length) % images.length;
+    mainImg.src = images[currentIndex];
+    mainImg.classList.add("fade");
+    setTimeout(() => mainImg.classList.remove("fade"), 300);
+    updateActiveContainer();
+  }
+
+  function setMainImage(img) {
+    mainImg.src = img.src;
+    currentIndex = images.findIndex(image => img.src.includes(image));
+    mainImg.classList.add("fade");
+    setTimeout(() => mainImg.classList.remove("fade"), 300);
+    updateActiveContainer();
+  }
+
+  // Call once on load to set initial highlight
+  window.onload = updateActiveContainer;
+</script>
+
 </body>
 </html>
-
