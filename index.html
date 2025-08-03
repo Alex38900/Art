@@ -3,46 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Art Gallery</title>
+  <title>Art Showcase</title>
   <link rel="stylesheet" href="test1.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <header>
+    <a href="index.html" class="home-button"><i class="fas fa-home"></i> Home</a>
     <h1>Art Showcase</h1>
   </header>
 
   <main class="container">
     <div class="main-column">
-      <div class="main-image-container">
+      <div class="main-image-container" id="mainImageContainer">
         <img id="main-image" src="1.jpeg" alt="Main Artwork" />
         <button class="arrow left" onclick="changeImage(-1)">&#8592;</button>
         <button class="arrow right" onclick="changeImage(1)">&#8594;</button>
       </div>
-      <button class="download-btn" onclick="downloadImage()">Download</button>
+      <center><button class="download-btn" onclick="downloadImage()">Download</button></center>
     </div>
 
     <div class="thumbnail-row">
-      <div class="thumbnail-gallery">
-        <img src="1.jpeg" onclick="setMainImage(this)" />
-      </div>
-      <div class="thumbnail-gallery">
-        <img src="2.jpg" onclick="setMainImage(this)" />
-      </div>
-      <div class="thumbnail-gallery">
-        <img src="3.png" onclick="setMainImage(this)" />
-      </div>
-      <div class="thumbnail-gallery">
-        <img src="4.jpeg" onclick="setMainImage(this)" />
-      </div>
-      <div class="thumbnail-gallery">
-        <img src="4.jpeg" onclick="setMainImage(this)" />
-      </div>
+      <div class="thumbnail-gallery active-container"><img src="1.jpeg" onclick="setMainImage(this)"></div>
+      <div class="thumbnail-gallery"><img src="2.jpg" onclick="setMainImage(this)"></div>
+      <div class="thumbnail-gallery"><img src="3.png" onclick="setMainImage(this)"></div>
+      <div class="thumbnail-gallery"><img src="4.jpeg" onclick="setMainImage(this)"></div>
+      <div class="thumbnail-gallery"><img src="5.jpeg" onclick="setMainImage(this)"></div>
     </div>
   </main>
 
-  <section class="details-box">
-    <h3><B><center>Softwares Used</center></B></h3>
+  <section class="details-box hidden">
+    <h3>Artwork Details</h3>
     <ul>
       <li><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" class="icon"> 
         <strong class="blender">Blender:</strong> 3D modeling, sculpting</li>
@@ -53,13 +44,13 @@
     </ul>
   </section>
 
-  <div class="follow-section">
+  <div class="follow-section hidden">
     <h2>Follow Me</h2>
     <div class="social-links">
-      <a class="instagram" href="https://www.instagram.com/cg_alexx_3d?igsh=MWJ3c252aDZwdWYybg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a class="instagram" href="https://www.instagram.com/cg_alexx_3d" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
       <a class="artstation" href="https://alex3809.artstation.com/" target="_blank"><i class="fab fa-artstation"></i> ArtStation</a>
       <a class="discord" href="https://discord.gg/k9uS8a4r" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-      <a class="youtube" href="https://youtube.com/@alex389x?si=14yD8w9TOdrbGviu" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a class="youtube" href="https://youtube.com/@alex389x" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
     </div>
   </div>
 
@@ -68,32 +59,47 @@
   </footer>
 
   <script>
-    const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg"];
+    const images = ["1.jpeg", "2.jpg", "3.png", "4.jpeg", "5.jpeg"];
     let currentIndex = 0;
+    let slideshowInterval;
     const mainImg = document.getElementById('main-image');
     const thumbnailContainers = document.querySelectorAll('.thumbnail-gallery');
+    const container = document.getElementById('mainImageContainer');
 
     function updateActiveContainer() {
       thumbnailContainers.forEach(c => c.classList.remove('active-container'));
-      if (thumbnailContainers[currentIndex]) {
-        thumbnailContainers[currentIndex].classList.add('active-container');
-      }
+      thumbnailContainers[currentIndex].classList.add('active-container');
     }
 
     function changeImage(direction) {
       currentIndex = (currentIndex + direction + images.length) % images.length;
-      mainImg.src = images[currentIndex];
+      setImage(currentIndex);
+    }
+
+    function setMainImage(img) {
+      const index = images.findIndex(i => img.src.includes(i));
+      if (index !== -1) {
+        currentIndex = index;
+        setImage(currentIndex);
+      }
+    }
+
+    function setImage(index) {
+      mainImg.src = images[index];
       mainImg.classList.add("fade");
       setTimeout(() => mainImg.classList.remove("fade"), 300);
       updateActiveContainer();
     }
 
-    function setMainImage(img) {
-      mainImg.src = img.src;
-      currentIndex = images.findIndex(image => img.src.includes(image));
-      mainImg.classList.add("fade");
-      setTimeout(() => mainImg.classList.remove("fade"), 300);
-      updateActiveContainer();
+    function startSlideshow() {
+      slideshowInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        setImage(currentIndex);
+      }, 3000);
+    }
+
+    function pauseSlideshow() {
+      clearInterval(slideshowInterval);
     }
 
     function downloadImage() {
@@ -105,9 +111,27 @@
       document.body.removeChild(link);
     }
 
-    // Highlight first thumbnail on load
-    window.onload = updateActiveContainer;
+    container.addEventListener('mouseenter', pauseSlideshow);
+    container.addEventListener('mouseleave', startSlideshow);
+
+    window.onload = () => {
+      updateActiveContainer();
+      startSlideshow();
+
+      // Intersection animation
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade');
+            entry.target.classList.remove('hidden');
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+    };
   </script>
 </body>
 </html>
-
