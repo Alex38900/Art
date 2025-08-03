@@ -123,6 +123,7 @@ header h1 {
   right: -30px;
 }
 
+/* ===== THUMBNAILS ===== */
 .thumbnail-row {
   display: flex;
   flex-wrap: wrap;
@@ -131,28 +132,31 @@ header h1 {
   padding-bottom: 10px;
 }
 
-@media (max-width: 768px) {
-  .thumbnail-row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
-
-  .thumbnail-gallery {
-    flex: 0 0 auto;
-    scroll-snap-align: center;
-  }
-}
-
+/* Default: 5 per row */
 .thumbnail-gallery {
-  flex: 0 0 auto;
-  width: 150px;
+  flex: 0 1 calc(20% - 20px);
+  max-width: calc(20% - 20px);
   background-color: #1c1c1c;
   padding: 5px;
   border: 2px solid #00c6ff66;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
-  scroll-snap-align: center;
+}
+
+/* Tablets: 4 per row */
+@media (max-width: 1023px) {
+  .thumbnail-gallery {
+    flex: 0 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+  }
+}
+
+/* Mobile: 3 per row */
+@media (max-width: 767px) {
+  .thumbnail-gallery {
+    flex: 0 1 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+  }
 }
 
 .thumbnail-gallery img {
@@ -286,7 +290,6 @@ footer {
   color: #ddd;
 }
 
-/* Fade-in animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -298,7 +301,7 @@ footer {
   }
 }
 
-/* Mobile responsiveness for header text */
+/* Header resize for small mobile */
 @media (max-width: 480px) {
   header h1 {
     font-size: 1.4rem;
